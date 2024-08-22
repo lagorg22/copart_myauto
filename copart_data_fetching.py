@@ -13,23 +13,16 @@ import time
 class Car:
     def __init__(self, url: str):
         self.url = url
-        self.lot = None
-        self.vin = None
-        self.title = None
         self.drive = None
         self.color = None
-        self.vehicle = None
         self.keys = None
-        self.highlights = None
-        self.primary = None
-        self.estimated = None
+        self.estimated_retail_value = None
         self.brand = None
         self.model = None
         self.year = None
         self.odometer = None
         self.cylinders = None
-        self.body = None
-        self.engine = None
+        self.engine_type = None
         self.transmission = None
         self.fuel = None
         self.driver: webdriver
@@ -67,7 +60,7 @@ class Car:
         descriptions_txt = [elem.text for elem in elements_all]
         curr_len = min(len(values_txt), len(descriptions_txt))
         for i in range(curr_len):
-            self.__setattr__(descriptions_txt[i].split()[0].lower().rstrip(':'), values_txt[i])
+            self.__setattr__(descriptions_txt[i].lower().replace(' ', '_').rstrip(':'), values_txt[i])
 
     def __fetch_data(self):
         self.__get_website()
@@ -76,12 +69,19 @@ class Car:
     def show_data(self):
         self.__fetch_data()
         self.driver.close()
-        print(f'odometer: {self.odometer}\n'
+        print(f'drive: {self.drive}\n'
+              f'color: {self.color}\n'
+              f'keys: {self.keys}\n'
+              f'estimated: {self.estimated_retail_value}\n'
+              f'brand: {self.brand}\n'
+              f'model: {self.model}\n'
+              f'year: {self.year}\n'
+              f'odometer: {self.odometer}\n'
               f'cylinders: {self.cylinders}\n'
-              f'body_style: {self.body}\n'
-              f'engine: {self.engine}\n'
+              f'engine: {self.engine_type}\n'
               f'transmission: {self.transmission}\n'
               f'fuel: {self.fuel}')
+
 
 
 
