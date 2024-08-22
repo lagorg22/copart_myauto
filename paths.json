@@ -1,6 +1,0 @@
-{
-  "odometer": ".odometer-value > span:nth-child(1) > span:nth-child(1)",
-  "cylinders": ".lot-information > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(9) > div:nth-child(1) > span:nth-child(2)",
-  "engine": ".lot-information > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(15) > div:nth-child(1) > span:nth-child(2)",
-  "fuel": ".lot-information > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(22) > div:nth-child(1) > span:nth-child(2)"
-}

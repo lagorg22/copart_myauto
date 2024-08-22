@@ -1,7 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.edge.service import Service
 from selenium.webdriver.edge.options import Options
-import json
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
@@ -47,10 +46,6 @@ class Car:
 
         self.driver = webdriver.Edge(service=edge_service, options=edge_options)
 
-    def __get_paths(self):
-        with open('paths.json', 'r') as file:
-            return json.load(file)
-
     def __get_website(self):
         self.driver.get(self.url)
         while True:
@@ -62,7 +57,7 @@ class Car:
                 self.driver.refresh()
 
 
-    def __fill_attributes(self, paths):
+    def __fill_attributes(self):
         descriptions_xpath = '/html/body/div[3]/div[3]/div/app-root/div[1]/div[1]/div/div[2]/div/div/div[1]/div[1]/div[1]/div[2]/div[1]/div/div[2]/div/div/div/div/label'
         values_xpath = '/html/body/div[3]/div[3]/div/app-root/div[1]/div[1]/div/div[2]/div/div/div[1]/div[1]/div[1]/div[2]/div[1]/div/div[2]/div/div/div/div/span'
         elements_all = WebDriverWait(self.driver, 10).until(ec.presence_of_all_elements_located((By.XPATH, descriptions_xpath)))
@@ -75,9 +70,8 @@ class Car:
             self.__setattr__(descriptions_txt[i].split()[0].lower().rstrip(':'), values_txt[i])
 
     def __fetch_data(self):
-        paths: dict[str, str] = self.__get_paths()
         self.__get_website()
-        self.__fill_attributes(paths)
+        self.__fill_attributes()
 
     def show_data(self):
         self.__fetch_data()
