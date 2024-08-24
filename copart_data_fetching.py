@@ -32,10 +32,10 @@ class Car:
         edge_driver_path = "/home/lasha/Desktop/copart_myauto_integration/msedgedriver"
         edge_service = Service(executable_path=edge_driver_path)
 
-        proxy = RandomProxy().get_random_proxy()
+        # proxy = RandomProxy().get_random_proxy()
         edge_options = Options()
         edge_options.add_experimental_option('detach', True)
-        edge_options.add_argument(f'--proxy-server={proxy}')
+        # edge_options.add_argument(f'--proxy-server={proxy}')
 
         self.driver = webdriver.Edge(service=edge_service, options=edge_options)
 
@@ -53,9 +53,22 @@ class Car:
     def __fill_attributes(self):
         descriptions_xpath = '/html/body/div[3]/div[3]/div/app-root/div[1]/div[1]/div/div[2]/div/div/div[1]/div[1]/div[1]/div[2]/div[1]/div/div[2]/div/div/div/div/label'
         values_xpath = '/html/body/div[3]/div[3]/div/app-root/div[1]/div[1]/div/div[2]/div/div/div[1]/div[1]/div[1]/div[2]/div[1]/div/div[2]/div/div/div/div/span'
+        year_brand_model_xpath = '/html/body/div[3]/div[3]/div/app-root/div[1]/div[1]/div/div[1]/div/div/div/div/div/div/h1'
+        year_brand_model = WebDriverWait(self.driver, 10).until(ec.presence_of_element_located((By.XPATH, year_brand_model_xpath)))
+        year_brand_model = year_brand_model.text.split()
+
+        self.year = year_brand_model[0]
+        self.brand = year_brand_model[1]
+        self.model = ' '.join(year_brand_model[2:])
+
+
+
+        time.sleep(5) #temporary
         elements_all = WebDriverWait(self.driver, 10).until(ec.presence_of_all_elements_located((By.XPATH, descriptions_xpath)))
+        time.sleep(5)#temporary
         all_values = WebDriverWait(self.driver, 10).until(
             ec.presence_of_all_elements_located((By.XPATH, values_xpath)))
+        time.sleep(5)#temporary
         values_txt = [elem.text for elem in all_values]
         descriptions_txt = [elem.text for elem in elements_all]
         curr_len = min(len(values_txt), len(descriptions_txt))
