@@ -11,8 +11,8 @@ from rand_proxies import RandomProxy
 import time
 
 class Car:
-    def __init__(self, url: str):
-        self.url = url
+    def __init__(self, lot_number: str):
+        self.lot_number = lot_number
         self.drive = None
         self.color = None
         self.keys = None
@@ -40,7 +40,7 @@ class Car:
         self.driver = webdriver.Edge(service=edge_service, options=edge_options)
 
     def __get_website(self):
-        self.driver.get(self.url)
+        self.driver.get(f'https://www.copart.com/lot/{self.lot_number}')
         while True:
             try:
                 time.sleep(3)
