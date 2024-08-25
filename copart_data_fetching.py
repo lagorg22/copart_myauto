@@ -2,12 +2,9 @@ from selenium import webdriver
 from selenium.webdriver.edge.service import Service
 from selenium.webdriver.edge.options import Options
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
-from selenium.webdriver.support.expected_conditions import element_attribute_to_include
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
-from rand_proxies import RandomProxy
 import time
 
 class Car:
@@ -57,9 +54,9 @@ class Car:
         year_brand_model = WebDriverWait(self.driver, 10).until(ec.presence_of_element_located((By.XPATH, year_brand_model_xpath)))
         year_brand_model = year_brand_model.text.split()
 
-        self.year = year_brand_model[0]
-        self.brand = year_brand_model[1]
-        self.model = ' '.join(year_brand_model[2:])
+        self.year = year_brand_model[0].lower()
+        self.brand = year_brand_model[1].lower()
+        self.model = ' '.join(year_brand_model[2:-1]).lower()
 
 
 
@@ -73,7 +70,10 @@ class Car:
         descriptions_txt = [elem.text for elem in elements_all]
         curr_len = min(len(values_txt), len(descriptions_txt))
         for i in range(curr_len):
-            self.__setattr__(descriptions_txt[i].lower().replace(' ', '_').rstrip(':'), values_txt[i])
+            self.__setattr__(descriptions_txt[i].lower().replace(' ', '_').rstrip(':'), values_txt[i].lower())
+
+        self.engine_type = self.engine_type.split()[0].replace('l', '')
+
 
     def __fetch_data(self):
         self.__get_website()
