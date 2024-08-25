@@ -33,9 +33,9 @@ class MyautoAnalytics:
         self.driver.get('https://www.myauto.ge/en/')
     
     def __set_brand(self):
-        time.sleep(4)
+        time.sleep(7)
         brand_dropdown_xpath = '/html/body/div[2]/div[1]/div[3]/div/div[1]/div[2]/div[2]/div/div[1]/div/div/div/div'
-        brand_dropdown = WebDriverWait(self.driver, 10).until(
+        brand_dropdown = WebDriverWait(self.driver, 13).until(
             ec.element_to_be_clickable((By.XPATH, brand_dropdown_xpath)))
         self.driver.execute_script('arguments[0].click();', brand_dropdown)
         brand_input_xpath = '/html/body/div[2]/div[1]/div[3]/div/div[1]/div[2]/div[2]/div/div[1]/div/div/div[1]/div/input'
@@ -59,14 +59,21 @@ class MyautoAnalytics:
         model_input_xpath = '/html/body/div[2]/div[1]/div[3]/div/div[1]/div[2]/div[2]/div/div[2]/div/div/div[1]/div/input'
         model_input_field = WebDriverWait(self.driver, 10).until(ec.visibility_of_element_located((By.XPATH, model_input_xpath)))
         time.sleep(3)
-        model_input_field.send_keys(self.car.model)
+        model = self.car.model
+        while True:
+            try:
+                model_input_field.clear()
+                model_input_field.send_keys(model)
 
-        first_model_suggestion_xpath = '/html/body/div[2]/div[1]/div[3]/div/div[1]/div[2]/div[2]/div/div[2]/div/div/div[2]/div[1]/label/span'
-        time.sleep(3)
-        first_model_suggestion = WebDriverWait(self.driver, 10).until(
-            ec.presence_of_element_located((By.XPATH, first_model_suggestion_xpath))
-        )
-        self.driver.execute_script("arguments[0].click();", first_model_suggestion)
+                first_model_suggestion_xpath = '/html/body/div[2]/div[1]/div[3]/div/div[1]/div[2]/div[2]/div/div[2]/div/div/div[2]/div[1]/label/span'
+                time.sleep(3)
+                first_model_suggestion = WebDriverWait(self.driver, 10).until(
+                    ec.presence_of_element_located((By.XPATH, first_model_suggestion_xpath))
+                )
+                self.driver.execute_script("arguments[0].click();", first_model_suggestion)
+                break
+            except (TimeoutException, NoSuchElementException):
+                model = ' '.join(model.split()[:-1])
 
     def __search(self):
         search_xpath = '/html/body/div[2]/div[1]/div[3]/div/div[1]/div[2]/div[2]/div/div[9]/button'
@@ -87,7 +94,7 @@ class MyautoAnalytics:
     def __get_prices(self):
         price_xpath = '/html/body/div[2]/div[1]/div[2]/div[2]/div[4]/div/div[3]/div/div[1]/div[3]/div[2]/div[2]/div/div/div[1]/p'
         prices = WebDriverWait(self.driver, 12).until(ec.presence_of_all_elements_located((By.XPATH, price_xpath)))
-        prices = [int(num.text.replace(',', '')) for num in prices]
+        prices = [int(num.text.replace(',', '')) for num in prices if len(num.text) >= 5]
         self.prices += prices
     def go_to_search_page(self):
         self.__get_mans_n_models()
@@ -106,6 +113,13 @@ class MyautoAnalytics:
             finally:
                 page_num += 1
 
-        print(self.prices)
+
 
         self.driver.close()
+
+    def calculate(self):
+        self.go_to_search_page()
+        mean = int(sum(self.prices)/len(self.prices))
+        print(f'Mean Price: {mean}\n'
+                f'Min Price: {min(self.prices)}\n'
+                f'Max Price: {max(self.prices)}')

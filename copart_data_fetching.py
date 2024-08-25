@@ -56,7 +56,7 @@ class Car:
 
         self.year = year_brand_model[0].lower()
         self.brand = year_brand_model[1].lower()
-        self.model = ' '.join(year_brand_model[2:-1]).lower()
+        self.model = ' '.join(year_brand_model[2:]).lower()
 
 
 
