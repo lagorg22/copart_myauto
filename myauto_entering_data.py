@@ -92,7 +92,7 @@ class MyautoAnalytics:
 
         page_num = 1
         while True:
-            new_url = f'{STANDARD_URL_START}mansNModels={self.mans_n_models}&locations={LOCATIONS}&yearFrom={self.car.year}&yearTo={self.car.year}&engineFrom={self.car.engine_type}&engineTo={self.car.engine_type}&currId=1&mileageType=1&fuelTypes={FUEL_TYPES[self.car.fuel]}.{OTHER_FUEL_TYPES}&gearTypes={GEARBOX_TYPES[self.car.transmission]}&driveTypes={DRIVE_WHEELS[self.car.drive]}&page={page_num}&layoutId=1'
+            new_url = f'{STANDARD_URL_START}mansNModels={self.mans_n_models}&locations={LOCATIONS}&yearFrom={self.car.year}&yearTo={self.car.year}&engineFrom={self.car.engine_type if self.car.engine_type is not None else ""}&engineTo={self.car.engine_type if self.car.engine_type is not None else ""}&currId=1&mileageType=1&fuelTypes={FUEL_TYPES[self.car.fuel]}.{OTHER_FUEL_TYPES}&gearTypes={GEARBOX_TYPES[self.car.transmission]}&driveTypes={DRIVE_WHEELS[self.car.drive]}&page={page_num}&layoutId=1'
             self.driver.get(new_url)
             try:
                 self.__get_prices()

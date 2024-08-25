@@ -25,6 +25,7 @@ class Car:
         self.fuel = None
         self.driver: webdriver
         self.__init_web_driver()
+        self.__fetch_data()
 
     def __init_web_driver(self):
         edge_driver_path = constants.DRIVER_PATH
@@ -88,22 +89,7 @@ class Car:
     def __fetch_data(self):
         self.__get_website()
         self.__fill_attributes()
-
-    def show_data(self):
-        self.__fetch_data()
         self.driver.close()
-        print(f'drive: {self.drive}\n'
-              f'color: {self.color}\n'
-              f'keys: {self.keys}\n'
-              f'estimated: {self.estimated_retail_value}\n'
-              f'brand: {self.brand}\n'
-              f'model: {self.model}\n'
-              f'year: {self.year}\n'
-              f'odometer: {self.odometer}\n'
-              f'cylinders: {self.cylinders}\n'
-              f'engine: {self.engine_type}\n'
-              f'transmission: {self.transmission}\n'
-              f'fuel: {self.fuel}')
 
 
 
