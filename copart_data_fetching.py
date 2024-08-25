@@ -72,7 +72,8 @@ class Car:
         for i in range(curr_len):
             self.__setattr__(descriptions_txt[i].lower().replace(' ', '_').rstrip(':'), values_txt[i].lower())
 
-        self.engine_type = self.engine_type.split()[0].replace('l', '')
+        if self.engine_type:
+            self.engine_type = self.engine_type.split()[0].replace('l', '')
 
 
     def __fetch_data(self):

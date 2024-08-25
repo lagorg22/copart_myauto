@@ -1,19 +1,6 @@
-import csv
-import requests
-import threading
 
-proxies_all = []
+lst = [6100, 9200, 6500, 6200, 7500, 6600, 7300, 7200, 7500, 6000, 5900, 7200, 6300, 5900, 6300, 6000, 6700, 7500, 6500, 7700, 6700, 7500, 6500, 4600, 7200, 6500, 3650, 6700, 6900, 7800, 7700, 5950, 6500, 7800, 8530, 5300, 7200, 6000, 3800, 7700, 6050, 6500, 7900, 5900, 7600, 7300, 7000, 6900, 8000, 8000, 9500, 5800]
 
-with open('proxies.csv', 'r') as f:
-    reader = csv.reader(f)
-    for row in reader:
-        proxies_all.append(row[1])
 
-# url = 'http://httpbin.org/ip'
-# proxies = {
-#     'http': proxy,
-#     'https': proxy,
-# }
-#
-# for proxy in proxies_all:
-#     try:
+
+print(len(lst))

@@ -5,9 +5,6 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
-
-from constants import FUEL_TYPES
-from rand_proxies import RandomProxy
 from urllib.parse import urlparse, parse_qs
 import time
 from copart_data_fetching import Car
@@ -18,6 +15,7 @@ class MyautoAnalytics:
     def __init__(self, car: Car):
         self.car = car
         self.mans_n_models = None
+        self.prices: list[int] = []
         self.driver: webdriver = None
         self.__init_web_driver()
 
@@ -35,6 +33,7 @@ class MyautoAnalytics:
         self.driver.get('https://www.myauto.ge/en/')
     
     def __set_brand(self):
+        time.sleep(4)
         brand_dropdown_xpath = '/html/body/div[2]/div[1]/div[3]/div/div[1]/div[2]/div[2]/div/div[1]/div/div/div/div'
         brand_dropdown = WebDriverWait(self.driver, 10).until(
             ec.element_to_be_clickable((By.XPATH, brand_dropdown_xpath)))
@@ -85,12 +84,28 @@ class MyautoAnalytics:
 
         self.mans_n_models = query_params.get('mansNModels', [None])[0]
 
+    def __get_prices(self):
+        price_xpath = '/html/body/div[2]/div[1]/div[2]/div[2]/div[4]/div/div[3]/div/div[1]/div[3]/div[2]/div[2]/div/div/div[1]/p'
+        prices = WebDriverWait(self.driver, 12).until(ec.presence_of_all_elements_located((By.XPATH, price_xpath)))
+        prices = [int(num.text.replace(',', '')) for num in prices]
+        self.prices += prices
     def go_to_search_page(self):
         self.__get_mans_n_models()
-        new_url = f'https://www.myauto.ge/en/s/for-sell-cars?vehicleType=0&bargainType=0&mansNModels={self.mans_n_models}&locations=2.3.4.7.15.30.113.52.37.48.47.44.41.31.40.39.38.36.53.54.16.14.13.12.11.10.9.8.6.5.55.56.57.59.58.61.62.63.64.66.71.72.74.75.76.77.78.80.81.82.83.84.85.86.87.88.91.96.97.101.109.116.119.122.127.131.133&yearFrom={self.car.year}&yearTo={self.car.year}&engineFrom={self.car.engine_type}&engineTo={self.car.engine_type}&currId=1&mileageType=1&fuelTypes={constants.FUEL_TYPES[self.car.fuel]}.{constants.OTHER_FUEL_TYPES}&gearTypes={constants.GEARBOX_TYPES[self.car.transmission]}&driveTypes={constants.DRIVE_WHEELS[self.car.drive]}&page=&layoutId=1'
+        # new_url = f'https://www.myauto.ge/en/s/for-sell-cars?vehicleType=0&bargainType=0&mansNModels={self.mans_n_models}&locations=2.3.4.7.15.30.113.52.37.48.47.44.41.31.40.39.38.36.53.54.16.14.13.12.11.10.9.8.6.5.55.56.57.59.58.61.62.63.64.66.71.72.74.75.76.77.78.80.81.82.83.84.85.86.87.88.91.96.97.101.109.116.119.122.127.131.133&yearFrom={self.car.year}&yearTo={self.car.year}&engineFrom={self.car.engine_type}&engineTo={self.car.engine_type}&currId=1&mileageType=1&fuelTypes={constants.FUEL_TYPES[self.car.fuel]}.{constants.OTHER_FUEL_TYPES}&gearTypes={constants.GEARBOX_TYPES[self.car.transmission]}&driveTypes={constants.DRIVE_WHEELS[self.car.drive]}&page=&layoutId=1'
 
-        self.driver.get(new_url)
 
-        time.sleep(10)
+
+        page_num = 1
+        while True:
+            new_url = f'https://www.myauto.ge/en/s/for-sell-cars?vehicleType=0&bargainType=0&mansNModels={self.mans_n_models}&locations=2.3.4.7.15.30.113.52.37.48.47.44.41.31.40.39.38.36.53.54.16.14.13.12.11.10.9.8.6.5.55.56.57.59.58.61.62.63.64.66.71.72.74.75.76.77.78.80.81.82.83.84.85.86.87.88.91.96.97.101.109.116.119.122.127.131.133&yearFrom={self.car.year}&yearTo={self.car.year}&engineFrom={self.car.engine_type}&engineTo={self.car.engine_type}&currId=1&mileageType=1&fuelTypes={constants.FUEL_TYPES[self.car.fuel]}.{constants.OTHER_FUEL_TYPES}&gearTypes={constants.GEARBOX_TYPES[self.car.transmission]}&driveTypes={constants.DRIVE_WHEELS[self.car.drive]}&page={page_num}&layoutId=1'
+            self.driver.get(new_url)
+            try:
+                self.__get_prices()
+            except (NoSuchElementException, TimeoutException):
+                break
+            finally:
+                page_num += 1
+
+        print(self.prices)
 
         self.driver.close()
