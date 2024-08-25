@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
+import constants
 import time
 
 class Car:
@@ -26,7 +27,7 @@ class Car:
         self.__init_web_driver()
 
     def __init_web_driver(self):
-        edge_driver_path = "/home/lasha/Desktop/copart_myauto_integration/msedgedriver"
+        edge_driver_path = constants.DRIVER_PATH
         edge_service = Service(executable_path=edge_driver_path)
 
         # proxy = RandomProxy().get_random_proxy()
@@ -48,9 +49,17 @@ class Car:
 
 
     def __fill_attributes(self):
-        descriptions_xpath = '/html/body/div[3]/div[3]/div/app-root/div[1]/div[1]/div/div[2]/div/div/div[1]/div[1]/div[1]/div[2]/div[1]/div/div[2]/div/div/div/div/label'
-        values_xpath = '/html/body/div[3]/div[3]/div/app-root/div[1]/div[1]/div/div[2]/div/div/div[1]/div[1]/div[1]/div[2]/div[1]/div/div[2]/div/div/div/div/span'
-        year_brand_model_xpath = '/html/body/div[3]/div[3]/div/app-root/div[1]/div[1]/div/div[1]/div/div/div/div/div/div/h1'
+        descriptions_xpath = constants.DESCRIPTIONS_XPATH
+        values_xpath = constants.VALUES_XPATH
+        year_brand_model_xpath = constants.YEAR_BRAND_MODEL_XPATH
+        try:
+            WebDriverWait(self.driver, 10).until(ec.presence_of_element_located((By.XPATH, constants.GREEN_YELLOW_LIGHT_XPATH)))
+            descriptions_xpath = constants.DESCRIPTIONS_XPATH_GR_YE
+            values_xpath = constants.VALUES_XPATH_GR_YE
+            year_brand_model_xpath = constants.YEAR_BRAND_MODEL_XPATH_GR_YE
+        except (TimeoutException, NoSuchElementException):
+            pass
+
         year_brand_model = WebDriverWait(self.driver, 10).until(ec.presence_of_element_located((By.XPATH, year_brand_model_xpath)))
         year_brand_model = year_brand_model.text.split()
 
