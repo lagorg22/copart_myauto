@@ -1,4 +1,5 @@
 FUEL_TYPES = {
+    'flexible fuel': '2',
     'gas' : '2',
     'diesel': '3',
     'electric': '7',
