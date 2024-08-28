@@ -105,7 +105,11 @@ class MyautoAnalytics:
 
     def calculate(self):
         self.go_to_search_page()
-        mean = int(sum(self.prices)/len(self.prices))
-        print(f'Mean Price: {mean}\n'
-                f'Min Price: {min(self.prices)}\n'
-                f'Max Price: {max(self.prices)}')
+        mean_value = int(sum(self.prices)/len(self.prices))
+        min_value = min(self.prices)
+        max_value = max(self.prices)
+        return {
+            'Mean Price': mean_value,
+            'Min Price': min_value,
+            'Max Price': max_value
+        }

@@ -91,6 +91,19 @@ class Car:
         self.__fill_attributes()
         self.driver.close()
 
+    def get_details(self):
+        return {
+            'Brand': self.brand,
+            'Model': self.model,
+            'Year': self.year,
+            'Odometer': self.odometer,
+            'Engine Type': self.engine_type,
+            'Transmission':self.transmission,
+            'Drive': self.drive,
+            'Fuel': self.fuel,
+            'Estimated Retail Value (US)': self.estimated_retail_value
+        }
+
 
 
 
