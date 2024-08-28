@@ -2,23 +2,39 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>CopAuto</title>
-    <style>
-        .spacer {
-            margin-top: 50px; /* Adjust the value as needed */
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CopAuto - Results</title>
+    <link rel="stylesheet" href="../static/styles.css">
 </head>
 <body>
-    <h1>Analytics about the car:</h1>
-    {% for key, val in car_details.items() %}
-        <h4>{{key}}: {{val}}</h4>
-    {% endfor %}
+    <div class="container">
+        <h1>Vehicle Analytics Results</h1>
 
-    <div class="spacer"></div> <!-- Spacer to create the gap -->
+        <div class="car-details">
+            <h2>Car Details:</h2>
+            {% for key, val in car_details.items() %}
+                <div class="detail-item">
+                    <span class="detail-label">{{key}}:</span>
+                    <span class="detail-value">{{val}}</span>
+                </div>
+            {% endfor %}
+        </div>
 
-    {% for key, val in data.items() %}
-        <h3>{{key}}: {{val}}</h3>
-    {% endfor %}
+        <div class="spacer"></div>
+
+        <div class="analytics">
+            <h2>Market Analytics:</h2>
+            {% for key, val in data.items() %}
+                <div class="analytics-item">
+                    <span class="analytics-label">{{key}}:</span>
+                    <span class="analytics-value">{{val}}</span>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="back-link">
+            <a href="/">Back to Search</a>
+        </div>
+    </div>
 </body>
 </html>

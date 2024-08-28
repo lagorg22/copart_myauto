@@ -2,15 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>CopAuto</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CopAuto - Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <h1>Search for Items</h1>
-
-    <form action="/calculate" method="post">
-        <label for="search">Enter the lot number:</label>
-        <input type="text" id="search" name="lot_num" placeholder="Type here...">
-        <input type="submit" value="Search">
-    </form>
+    <div class="container">
+        <h1>CopAuto Analytics</h1>
+        <p class="description">Get detailed analytics about vehicles from Copart and other auto sites.</p>
+        <form action="/calculate" method="post">
+            <label for="search">Enter the lot number:</label>
+            <input type="text" id="search" name="lot_num" placeholder="Type lot number here...">
+            <input type="submit" value="Search">
+        </form>
+    </div>
 </body>
 </html>
