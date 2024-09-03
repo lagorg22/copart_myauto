@@ -31,12 +31,10 @@ class Car:
         edge_driver_path = constants.DRIVER_PATH
         edge_service = Service(executable_path=edge_driver_path)
 
-        # proxy = RandomProxy().get_random_proxy()
         edge_options = Options()
-        # edge_options.add_argument('--headless')
-        # edge_options.add_argument('--disable-gpu')
+        edge_options.add_argument('--headless')
+        edge_options.add_argument('--disable-gpu')
         edge_options.add_experimental_option('detach', True)
-        # edge_options.add_argument(f'--proxy-server={proxy}')
 
         self.driver = webdriver.Edge(service=edge_service, options=edge_options)
 

@@ -17,7 +17,10 @@ def calculate():
     lot_num = request.form.get('lot_num')
 
     car = Car(lot_num)
-    data = MyautoAnalytics(car).calculate()
+    try:
+        data = MyautoAnalytics(car).calculate()
+    except ZeroDivisionError:
+        data = {'There were no such cars found on Myauto': 'Try ignoring some specs.'}
 
     return render_template('index.html', data=data, car_details=car.get_details())
 

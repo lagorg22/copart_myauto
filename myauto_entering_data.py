@@ -33,14 +33,12 @@ class MyautoAnalytics:
         self.driver.get('https://www.myauto.ge/en/')
     
     def __set_brand(self):
-        # time.sleep(7)
-        brand_dropdown = WebDriverWait(self.driver, 13).until(
+        brand_dropdown = WebDriverWait(self.driver, 10).until(
             ec.element_to_be_clickable((By.XPATH, BRAND_DROPDOWN_XPATH)))
         self.driver.execute_script('arguments[0].click();', brand_dropdown)
         brand_input_field = WebDriverWait(self.driver, 10).until(
             ec.visibility_of_element_located((By.XPATH, BRAND_INPUT_XPATH)))
         brand_input_field.send_keys(self.car.brand)
-        # time.sleep(3)
         first_brand_suggestion = WebDriverWait(self.driver, 10).until(
             ec.presence_of_element_located((By.XPATH, FIRST_BRAND_SUGGESTION_XPATH))
         )
@@ -56,17 +54,17 @@ class MyautoAnalytics:
             try:
                 model_input_field.clear()
                 model_input_field.send_keys(model)
-                WebDriverWait(self.driver, 10).until(ec.presence_of_element_located((By.XPATH, MODEL_NOT_FOUND_XPATH)))
-                model = ' '.join(model.split()[:-1])
+                WebDriverWait(self.driver, 2).until(ec.presence_of_element_located((By.XPATH, MODEL_NOT_FOUND_XPATH)))
+                model = model[:-1]
             except(TimeoutException, NoSuchElementException):
                 try:
-                    model_search_dropdown = WebDriverWait(self.driver, 10).until(ec.element_to_be_clickable((By.XPATH, MODEL_SEARCHED_DROPDOWN_XPATH)))
+                    model_search_dropdown = WebDriverWait(self.driver, 1).until(ec.element_to_be_clickable((By.XPATH, MODEL_SEARCHED_DROPDOWN_XPATH)))
                     self.driver.execute_script('arguments[0].click();', model_search_dropdown)
-                    model_dropdown_first = WebDriverWait(self.driver, 10).until(ec.element_to_be_clickable((By.XPATH, MODEL_DROPDOWN_FIRST_XPATH)))
+                    model_dropdown_first = WebDriverWait(self.driver, 1).until(ec.element_to_be_clickable((By.XPATH, MODEL_DROPDOWN_FIRST_XPATH)))
                     self.driver.execute_script('arguments[0].click();', model_dropdown_first)
                     break
                 except(TimeoutException, NoSuchElementException):
-                    model_first_suggestion = WebDriverWait(self.driver, 10).until(ec.element_to_be_clickable((By.XPATH, MODEL_FIRST_SUGGESTION_XPATH)))
+                    model_first_suggestion = WebDriverWait(self.driver, 1).until(ec.element_to_be_clickable((By.XPATH, MODEL_FIRST_SUGGESTION_XPATH)))
                     self.driver.execute_script('arguments[0].click();', model_first_suggestion)
                     break
 
@@ -109,15 +107,13 @@ class MyautoAnalytics:
 
     def calculate(self):
         self.go_to_search_page()
-        try:
-            mean_value = int(sum(self.prices)/len(self.prices))
-            min_value = min(self.prices)
-            max_value = max(self.prices)
-            return {
-                'Mean Price': mean_value,
-                'Min Price': min_value,
-                'Max Price': max_value
-            }
-        except ZeroDivisionError:
-            print('There were no such elements found. '
-                  'Try ignoring some specs.')
+        mean_value = int(sum(self.prices)/len(self.prices))
+        min_value = min(self.prices)
+        max_value = max(self.prices)
+        count = len(self.prices)
+        return {
+            'Researched cars count': count,
+            'Mean Price': mean_value,
+            'Min Price': min_value,
+            'Max Price': max_value
+        }
