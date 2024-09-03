@@ -33,6 +33,8 @@ class Car:
 
         # proxy = RandomProxy().get_random_proxy()
         edge_options = Options()
+        # edge_options.add_argument('--headless')
+        # edge_options.add_argument('--disable-gpu')
         edge_options.add_experimental_option('detach', True)
         # edge_options.add_argument(f'--proxy-server={proxy}')
 
@@ -70,12 +72,9 @@ class Car:
 
 
 
-        time.sleep(5) #temporary
         elements_all = WebDriverWait(self.driver, 10).until(ec.presence_of_all_elements_located((By.XPATH, descriptions_xpath)))
-        time.sleep(5)#temporary
         all_values = WebDriverWait(self.driver, 10).until(
             ec.presence_of_all_elements_located((By.XPATH, values_xpath)))
-        time.sleep(5)#temporary
         values_txt = [elem.text for elem in all_values]
         descriptions_txt = [elem.text for elem in elements_all]
         curr_len = min(len(values_txt), len(descriptions_txt))

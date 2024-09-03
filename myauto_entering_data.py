@@ -1,3 +1,5 @@
+from dbm import error
+
 from selenium import webdriver
 from selenium.webdriver.edge.service import Service
 from selenium.webdriver.edge.options import Options
@@ -23,20 +25,22 @@ class MyautoAnalytics:
         edge_driver_path = DRIVER_PATH
         edge_service = Service(executable_path=edge_driver_path)
         edge_options = Options()
+        # edge_options.add_argument('--headless')
+        # edge_options.add_argument('--disable-gpu')
         edge_options.add_experimental_option('detach', True)
         self.driver = webdriver.Edge(service=edge_service, options=edge_options)
 
         self.driver.get('https://www.myauto.ge/en/')
     
     def __set_brand(self):
-        time.sleep(7)
+        # time.sleep(7)
         brand_dropdown = WebDriverWait(self.driver, 13).until(
             ec.element_to_be_clickable((By.XPATH, BRAND_DROPDOWN_XPATH)))
         self.driver.execute_script('arguments[0].click();', brand_dropdown)
         brand_input_field = WebDriverWait(self.driver, 10).until(
             ec.visibility_of_element_located((By.XPATH, BRAND_INPUT_XPATH)))
         brand_input_field.send_keys(self.car.brand)
-        time.sleep(3)
+        # time.sleep(3)
         first_brand_suggestion = WebDriverWait(self.driver, 10).until(
             ec.presence_of_element_located((By.XPATH, FIRST_BRAND_SUGGESTION_XPATH))
         )
@@ -105,11 +109,15 @@ class MyautoAnalytics:
 
     def calculate(self):
         self.go_to_search_page()
-        mean_value = int(sum(self.prices)/len(self.prices))
-        min_value = min(self.prices)
-        max_value = max(self.prices)
-        return {
-            'Mean Price': mean_value,
-            'Min Price': min_value,
-            'Max Price': max_value
-        }
+        try:
+            mean_value = int(sum(self.prices)/len(self.prices))
+            min_value = min(self.prices)
+            max_value = max(self.prices)
+            return {
+                'Mean Price': mean_value,
+                'Min Price': min_value,
+                'Max Price': max_value
+            }
+        except ZeroDivisionError:
+            print('There were no such elements found. '
+                  'Try ignoring some specs.')
