@@ -4,11 +4,13 @@ FUEL_TYPES = {
     'diesel': '3',
     'electric': '7',
     'hybrid engine': '6.10',
+    'not_specified': ''
 }
 
 GEARBOX_TYPES = {
     'automatic': '2.3.4',
-    'manual': '1'
+    'manual': '1',
+    'not_specified': ''
 }
 
 DRIVE_WHEELS = {
@@ -17,7 +19,8 @@ DRIVE_WHEELS = {
     'all wheel drive': '3',
     'four by four': '3',
     'front-wheel drive': '1',
-    'rear-wheel drive': '2'
+    'rear-wheel drive': '2',
+    'not_specified': ''
 }
 
 OTHER_FUEL_TYPES = '9.8.12'

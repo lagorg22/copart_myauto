@@ -9,8 +9,9 @@ import constants
 import time
 
 class Car:
-    def __init__(self, lot_number: str):
+    def __init__(self, lot_number: str, ignore_options):
         self.lot_number = lot_number
+        self.ignore_options = ignore_options
         self.drive = None
         self.color = None
         self.keys = None
@@ -82,6 +83,14 @@ class Car:
         if self.engine_type:
             self.engine_type = self.engine_type.split()[0].replace('l', '')
 
+        for attr in self.__dict__:
+            try:
+                if self.ignore_options[attr]:
+                    self.__dict__[attr] = 'not_specified'
+                if attr == 'engine_type':
+                    self.__dict__[attr] = ''
+            except KeyError:
+                pass
 
     def __fetch_data(self):
         self.__get_website()
@@ -100,6 +109,8 @@ class Car:
             'Fuel': self.fuel,
             'Estimated Retail Value (US)': self.estimated_retail_value
         }
+
+
 
 
 

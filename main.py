@@ -16,7 +16,14 @@ def home():
 def calculate():
     lot_num = request.form.get('lot_num')
 
-    car = Car(lot_num)
+    ignore_options = {
+        'engine_type': request.form.get('ignore_engine') == '1',
+        'transmission': request.form.get('ignore_transmission') == '1',
+        'drive': request.form.get('ignore_drive') == '1',
+        'fuel': request.form.get('ignore_fuel') == '1'
+    }
+
+    car = Car(lot_num, ignore_options)
     try:
         data = MyautoAnalytics(car).calculate()
     except ZeroDivisionError:

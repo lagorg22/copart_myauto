@@ -4,36 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CopAuto - Results</title>
-    <link rel="stylesheet" href="../static/styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <div class="container">
+    <div class="container results-container">
         <h1>Vehicle Analytics Results</h1>
-
-        <div class="car-details">
-            <h2>Car Details:</h2>
-            {% for key, val in car_details.items() %}
-                <div class="detail-item">
-                    <span class="detail-label">{{key}}:</span>
-                    <span class="detail-value">{{val}}</span>
+        <div class="results-grid">
+            <div class="car-details">
+                <h2>Car Details</h2>
+                <div class="details-list">
+                    {% for key, val in car_details.items() %}
+                        <div class="detail-item">
+                            <span class="detail-label">{{key}}</span>
+                            <span class="detail-value">{{val}}</span>
+                        </div>
+                    {% endfor %}
                 </div>
-            {% endfor %}
-        </div>
-
-        <div class="spacer"></div>
-
-        <div class="analytics">
-            <h2>Market Analytics:</h2>
-            {% for key, val in data.items() %}
-                <div class="analytics-item">
-                    <span class="analytics-label">{{key}}:</span>
-                    <span class="analytics-value">{{val}}</span>
+            </div>
+            <div class="market-analytics">
+                <h2>Market Analytics</h2>
+                <div class="analytics-list">
+                    {% for key, val in data.items() %}
+                        <div class="analytics-item">
+                            <span class="analytics-label">{{key}}</span>
+                            <span class="analytics-value">{{val}}</span>
+                        </div>
+                    {% endfor %}
                 </div>
-            {% endfor %}
+            </div>
         </div>
-
         <div class="back-link">
-            <a href="/">Back to Search</a>
+            <a href="/" class="btn-back">Back to Search</a>
         </div>
     </div>
 </body>

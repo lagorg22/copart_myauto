@@ -11,10 +11,35 @@
         <h1>CopAuto Analytics</h1>
         <p class="description">Get detailed analytics about vehicles from Copart and other auto sites.</p>
         <form action="/calculate" method="post">
-            <label for="search">Enter the lot number:</label>
-            <input type="text" id="search" name="lot_num" placeholder="Type lot number here...">
-            <input type="submit" value="Search">
-        </form>
+    <div class="input-group">
+        <label for="lot_num">Enter the lot number:</label>
+        <input type="text" id="lot_num" name="lot_num" placeholder="Type lot number here..." required>
+    </div>
+
+    <div class="ignore-options">
+        <h3>Select details to ignore:</h3>
+        <div class="checkbox-group">
+            <div class="checkbox-item">
+                <input type="checkbox" id="ignore_engine" name="ignore_engine" value="1">
+                <label for="ignore_engine">Engine Type</label>
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="ignore_transmission" name="ignore_transmission" value="1">
+                <label for="ignore_transmission">Transmission</label>
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="ignore_drive" name="ignore_drive" value="1">
+                <label for="ignore_drive">Drive</label>
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="ignore_fuel" name="ignore_fuel" value="1">
+                <label for="ignore_fuel">Fuel</label>
+            </div>
+        </div>
+    </div>
+
+    <button type="submit">Search</button>
+</form>
     </div>
 </body>
 </html>
