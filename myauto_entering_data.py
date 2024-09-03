@@ -96,11 +96,12 @@ class MyautoAnalytics:
         while True:
             new_url = (f'{STANDARD_URL_START}mansNModels={self.mans_n_models}&locations={LOCATIONS}&y'
                        f'earFrom={self.car.year}&yearTo={self.car.year}&'
-                       f'engineFrom={self.car.engine_type}&'
-                       f'engineTo={self.car.engine_type}&'
-                       f'currId=1&mileageType=1&fuelTypes={FUEL_TYPES[self.car.fuel]}{f'.{OTHER_FUEL_TYPES}' if self.car.fuel is not 'not_specified' else ''}&'
+                       f'engineFrom={self.car.engine_type if self.car.engine_type != 'Not Specified' else ''}&'
+                       f'engineTo={self.car.engine_type if self.car.engine_type != 'Not Specified' else ''}&'
+                       f'currId=1&mileageType=1&fuelTypes={FUEL_TYPES[self.car.fuel]}{"." + OTHER_FUEL_TYPES if self.car.fuel != 'Not Specified' else ''}&'
                        f'gearTypes={GEARBOX_TYPES[self.car.transmission]}&driveTypes={DRIVE_WHEELS[self.car.drive]}&'
                        f'page={page_num}&layoutId=1')
+            print(self.car.fuel)
             self.driver.get(new_url)
             try:
                 self.__get_prices()

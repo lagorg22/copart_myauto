@@ -86,9 +86,10 @@ class Car:
         for attr in self.__dict__:
             try:
                 if self.ignore_options[attr]:
-                    self.__dict__[attr] = 'not_specified'
-                if attr == 'engine_type':
-                    self.__dict__[attr] = ''
+                    self.__dict__[attr] = 'Not Specified'
+                    # if attr == 'engine_type':
+                    #     self.__dict__[attr] = ''
+
             except KeyError:
                 pass
 

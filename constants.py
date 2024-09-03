@@ -4,13 +4,13 @@ FUEL_TYPES = {
     'diesel': '3',
     'electric': '7',
     'hybrid engine': '6.10',
-    'not_specified': ''
+    'Not Specified': ''
 }
 
 GEARBOX_TYPES = {
     'automatic': '2.3.4',
     'manual': '1',
-    'not_specified': ''
+    'Not Specified': ''
 }
 
 DRIVE_WHEELS = {
@@ -20,7 +20,7 @@ DRIVE_WHEELS = {
     'four by four': '3',
     'front-wheel drive': '1',
     'rear-wheel drive': '2',
-    'not_specified': ''
+    'Not Specified': ''
 }
 
 OTHER_FUEL_TYPES = '9.8.12'
@@ -34,7 +34,7 @@ YEAR_BRAND_MODEL_XPATH_GR_YE = '/html/body/div[3]/div[3]/div/app-root/div[1]/div
 
 GREEN_YELLOW_LIGHT_XPATH = '/html/body/div[3]/div[3]/div/app-root/div[1]/div[1]/div/div[1]/div/lot-details-header-component/div/div[1]/div/div/div/div[1]/span[1]/span/span[1]'
 
-DRIVER_PATH = '/home/lasha/Desktop/copart_myauto_integration/msedgedriver'
+DRIVER_PATH = '/home/lasha/Desktop/all/copart_myauto_integration/msedgedriver'
 
 BRAND_DROPDOWN_XPATH = '/html/body/div[2]/div[1]/div[3]/div/div[1]/div[2]/div[2]/div/div[1]/div/div/div/div'
 BRAND_INPUT_XPATH = '/html/body/div[2]/div[1]/div[3]/div/div[1]/div[2]/div[2]/div/div[1]/div/div/div[1]/div/input'
