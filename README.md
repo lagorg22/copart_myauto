@@ -12,17 +12,18 @@ Features:
 
     Automated Analysis: Ideal for buyers who repair and resell vehicles, automating the necessary work to determine a vehicle's resale value.
 How It Works:
-    Copart Lot Search: The user enters the Copart lot number, and the tool retrieves detailed information about the vehicle from Copart.
-    Users can also choose which details they want to ignore during search.
-    ![image](https://github.com/user-attachments/assets/15acd450-e7f9-41b9-9de8-0eb2c7f96b87)
+    
+  Copart Lot Search: The user enters the Copart lot number, and the tool retrieves detailed information about the vehicle from Copart.
+  Users can also choose which details they want to ignore during search.
+  ![image](https://github.com/user-attachments/assets/696edb97-a166-4ef7-bcdc-bfa5ad1b9ad3)
 
 
-    Myauto Search: The tool searches Myauto for cars with the same specifications as the one from Copart.
+  Myauto Search: The tool searches Myauto for cars with the same specifications as the one from Copart.
 
-    Price Analysis: The tool gathers the prices from Myauto and calculates the minimum, maximum, and mean prices.
+  Price Analysis: The tool gathers the prices from Myauto and calculates the minimum, maximum, and mean prices.
 
-    Result Display: The analysis is displayed on a single page, providing a clear and concise overview of the car's potential market value.
-    ![image](https://github.com/user-attachments/assets/806a8d12-7b37-4a74-8dc3-0118fa80ec52)
+  Result Display: The analysis is displayed on a single page, providing a clear and concise overview of the car's potential market value.
+    ![image](https://github.com/user-attachments/assets/f4301419-6d25-4fac-ad89-fe2d09de9298)
 
 Technologies Used:
     Python: For backend logic and data processing.
