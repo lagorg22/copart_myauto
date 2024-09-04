@@ -32,7 +32,7 @@ Technologies Used:
     HTML/CSS: For the frontend design.
 Installation
     Clone the repository:
-      git clone https://github.com/yourusername/copart-lot-price-analysis-tool.git
+      git clone https://github.com/lagorg22/copart_myauto.git
 
     Navigate to the project directory:
       cd copart-lot-price-analysis-tool
